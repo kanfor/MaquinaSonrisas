@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<!--
+INNOFIS - 2016
+-->
+
+<html>
+    <head>
+        <title>EL SUPER</title>
+        <meta charset="UTF-8">
+        <!-- Hack to force IE11 (HTML5) -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+        <style>
+        @font-face
+        {
+            font-family: "danone";
+            src: url('assets/texts/asap.otf');
+            format: "truetype";
+        }
+        body
+            {
+                border: 0px;
+                margin: 0px;
+                position: relative;
+                -webkit-text-size-adjust: none
+            }
+        </style>
+        <!-- Phaser framework -->
+        <script src="js/phaser.min.js"></script>
+        <!-- JQuery framework -->
+        <script src="js/jquery-1.12.4.min.js"></script>
+        <script src="js/CanvasInput.min.js"></script>
+        <!--- Vendor Danone -->
+        <!-- <script src="/js/vendor.js"></script> -->
+        <!-- Game files -->
+        <!-- <link rel="stylesheet" href="/css/global.css"> -->
+        <script src="js/boot.js"></script>
+        <script src="src/preload.js"></script>
+        <script src="js/menu.js"></script>
+        <script src="src/game.js"></script>
+        <script src="js/popups.js"></script>
+        <!-- Share in social nets -->
+        <script src="js/share.js"></script>
+    </head>
+    <body>
+        <p id = "font" style="font-family: 'danone'">.</p>
+        <!-- DIVISADERO -->
+        <!-- Empezar partida, "Participar" -->
+        <button type="button" id ="participar" style="display: none"></button>
+        <!-- Cuando quieres jugar al principio pero no tienes suficientes puntos -->
+        <button type="button" id ="pop_nopoints_sumarpuntos" style="display: none"></button>
+        <!-- Ha habido un error de conexion -->
+        <button type="button" id ="pop_errorconection_contactar" style="display: none"></button>
+        <button type="button" id ="pop_errorconection_reintentar" style="display: none"></button>
+        <!-- Has perdido la partida. Si pulsas "vamos" se reinicia el juego, y si pulsas "mas promociones" va a las otras promos -->
+        <button type="button" id ="pop_lose_vamos" style="display: none" onclick='console.log("Hello")'></button>
+        <button type="button" id ="pop_lose_maspromociones" style="display: none" onclick='console.log("Adios")'></button>
+        <!-- Has completado el juego pero no has ganado el premio -->
+        <button type="button" id ="pop_win_nopremio_vamos" style="display: none"></button>
+		<button type="button" id ="pop_win_nopremio_maspromociones" style="display: none"></button>
+        <!-- Has completado el juego y has ganado el premio -->
+        <button type="button" id ="pop_win_premio_vamos" style="display: none"></button>
+        <button type="button" id ="pop_win_maspromociones" style="display: none"></button>
+        <!-- Compartido en FACEBOOK -->
+        <button type="button" id ="share_facebook" style="display: none"></button>
+        <button type="button" id ="share_twitter" style="display: none"></button>
+        <!-- PEINE -->
+        <button type="button" id ="pincode_notexist" style="display: none"></button>
+        <button type="button" id ="pincode_contactar" style="display: none"></button>
+        <button type="button" id ="pincode_yetused" style="display: none"></button>
+        <button type="button" id ="pincode_ok_notenoughpoints" style="display: none"></button>
+        <button type="button" id ="pincode_ok_enoughpoints" style="display: none"></button>
+        <button type="button" id ="pincode_toopinsthismonth" style="display: none"></button>
+        <button type="button" id ="pincode_reintentar" style="display: none"></button>
+        <button type="button" id ="pincode_backtutorial" style="display: none"></button>
+        
+        <img id="share_facebook" style="display: none" src="assets/popups/twitter_share.jpg">
+        <img id="share_twitter" style="display: none" src="assets/popups/twitter_share.jpg">
+        
+        <script>
+            window.onload = function() {
+                
+                var timeFrame = "";
+                this.timeFrame = setInterval(runGame, 100);
+                
+                function runGame() {
+                    
+                    if (window.parent.$('#promImgFrame').length > 0)
+                    {
+                        //console.log("Welcome still exist!");
+                    }
+                    else
+                    {
+                        clearInterval(this.timeFrame);
+                        //console.log("Welcome not exist!");
+                        try
+                        {
+                            $(document).ready(function(){
+                                var token = window.parent.document.getElementsByName('csrf-token')[0].getAttribute("content");
+
+                                $.getScript( "src/main.js" )
+                                .done(function( script, textStatus ) {
+                                    console.log('Starting the game in server');
+                                })
+                                .fail(function( jqxhr, settings, exception ) {
+                                    console.log('Failed to load script');
+                                });
+                            });
+                        }
+                        catch (err)
+                        {
+                            $.getScript( "src/main.js" )
+                                .done(function( script, textStatus ) {
+                                    console.log('Starting the game in local');
+                                    game.MODE_LOCAL = true;
+                                })
+                                .fail(function( jqxhr, settings, exception ) {
+                                    console.log('Failed to load script');
+                                });
+                        }
+                    }
+                
+                }
+            }
+        </script>
+        
+        <!-- peina -->
+        <div>
+            <form>
+                <input id = "peine" type="text" style="display: none; border-radius: 5px;min-width: 0; font-size: 25px; font-family: 'danone'; background: white url(assets/popups/peine.png) left no-repeat; text-transform: uppercase;">
+            </form>
+        </div>
+    </body>
+</html>

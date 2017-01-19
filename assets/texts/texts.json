@@ -1,0 +1,16 @@
+{
+    "texts":[
+    {"menu":                "HAZ CLICK PARA EMPEZAR LA PARTIDA",
+        "round":            "ROUND",
+        "level":            "NIVEL",
+        "lose":             "HAS PERDIDO",
+        "win":              "HAS GANADO"},
+    
+    
+    {"menu":                "PATO",
+        "game_over":        "FIN PARTIDA",
+        "game_over2":        "FIN PARTIDA",
+        "game_over3":        "FIN PARTIDA"}
+    
+    ]
+}
